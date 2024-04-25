@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morphological Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f3f3f3;
+        }
+
+        .container {
+            text-align: center;
+            padding-bottom: 50px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .dropdown select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .dropdown select:focus {
+            outline: none;
+        }
+
+        .option {
+            font-size: 16px;
+        }
+
+        .morphological-analysis {
+            margin-top: 30px;
+        }
+
+        .morphological-analysis select {
+            margin-bottom: 10px;
+        }
+
+        .check-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .check-button:hover {
+            background-color: #45a049;
+        }
+
+        .correct-answer {
+            margin-top: 20px;
+            font-weight: bold;
+            display: none;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Morphological Analysis</h1>
+        <p>Select a word from the below dropdown and do a morphological analysis on that word.</p>
+        <div class="dropdown">
+            <select id="words">
+                <option value="word">Select a word</option>
+                <option value="play">play</option>
+                <option value="plays">plays</option>
+                <option value="playing">playing</option>
+                <option value="played">played</option>
+                <option value="train">train</option>
+                <option value="trains">trains</option>
+                <option value="training">training</option>
+                <option value="study">study</option>
+                <option value="studies">studies</option>
+                <option value="studying">studying</option>
+                <option value="watch">watch</option>
+                <option value="watches">watches</option>
+                <option value="watching">watching</option>
+                <option value="watched">watched</option>
+                <option value="walk">walk</option>
+                <option value="walks">walks</option>
+                <option value="walking">walking</option>
+                <option value="walked">walked</option>
+                <option value="sit">sit</option>
+                <option value="sits">sits</option>
+                <option value="sitting">sitting</option>
+                <option value="sat">sat</option>
+                <option value="book">book</option>
+                <option value="books">books</option>
+                <option value="booking">booking</option>
+                <option value="bookings">bookings</option>
+                <option value="booked">booked</option> <!-- Added "playing" -->
+            </select>
+        </div>
+
+        <div class="morphological-analysis">
+            <p>Select the Correct morphological analysis for the above word using dropboxes (NOTE : na = not applicable)
+            </p>
+            <select id="word-root">
+                <option value="word">SELECT THE ROOT WORD</option>
+                <option value="play">play</option>
+                <option value="plays">plays</option>
+                <option value="playing">playing</option>
+                <option value="played">played</option>
+                <option value="train">train</option>
+                <option value="trains">trains</option>
+                <option value="training">training</option>
+                <option value="study">study</option>
+                <option value="studies">studies</option>
+                <option value="studying">studying</option>
+                <option value="watch">watch</option>
+                <option value="watches">watches</option>
+                <option value="watching">watching</option>
+                <option value="watched">watched</option>
+                <option value="walk">walk</option>
+                <option value="walks">walks</option>
+                <option value="walking">walking</option>
+                <option value="walked">walked</option>
+                <option value="sit">sit</option>
+                <option value="sits">sits</option>
+                <option value="sitting">sitting</option>
+                <option value="sat">sat</option>
+                <option value="book">book</option>
+                <option value="books">books</option>
+                <option value="booking">booking</option>
+                <option value="bookings">bookings</option>
+                <option value="booked">booked</option>
+                <!-- Add other root options here -->
+            </select>
+            <select id="word-category">
+                <option value="#">CATEGORY</option>
+                <option value="verb">verb</option>
+                <!-- Add other category options here -->
+            </select>
+            <select id="word-gender">
+                <option value="#">GENDER</option>
+                <option value="male">male</option>
+                <option value="female">female</option>
+                <option value="na">na</option>
+            </select>
+            <select id="word-number">
+                <option value="#">NUMBER</option>
+                <option value="singular">singular</option>
+                <option value="plural">plural</option>
+                <option value="na">na</option>
+            </select>
+            <select id="word-person">
+                <option value="#">PERSON</option>
+                <option value="first">first</option>
+                <option value="second">second</option>
+                <option value="third">third</option>
+                <option value="na">na</option>
+            </select>
+            <select id="word-case">
+                <option value="#">CASE</option>
+                <option value="direct">direct</option>
+                <option value="oblique">oblique</option>
+                <option value="na">na</option>
+            </select>
+            <select id="word-tense">
+                <option value="#">TENSE</option>
+                <option value="present-continuous">present-continuous</option>
+                <option value="past-continuous">past-continuous</option>
+                <option value="future-continuous">future-continuous</option>
+                <option value="present-perfect-continuous">present-perfect-continuous</option>
+                <option value="past-perfect-continuous">past-perfect-continuous</option>
+                <option value="future-perfect-continuous">future-perfect-continuous</option>
+                <option value="simple-past">simple-past</option>
+                <option value="present-perfect">present-perfect</option>
+                <option value="past-perfect">past-perfect</option>
+                <option value="future-perfect">future-perfect</option>
+                <option value="simple-present">simple-present</option>
+                <option value="simple-past">simple-past</option>
+                <option value="simple-future">simple-future</option>
+                <option value="na">na</option>
+            </select>
+        </div>
+
+        <button class="check-button" onclick="checkAnswer()">Check</button>
+    </div>
+
+    <div id="result" class="correct-answer"></div>
+
+    <script>
+        function checkAnswer() {
+            var selectedWord = document.getElementById("words").value;
+            var selectedRoot = document.getElementById("word-root").value;
+            var selectedCategory = document.getElementById("word-category").value;
+            var selectedGender = document.getElementById("word-gender").value;
+            var selectedNumber = document.getElementById("word-number").value;
+            var selectedPerson = document.getElementById("word-person").value;
+            var selectedCase = document.getElementById("word-case").value;
+            var selectedTense = document.getElementById("word-tense").value;
+
+            var correctAnswers = {
+                "play": [
+                    ["play", "play", "verb", "male", "singular", "first", "na", "simple-present"],
+                    ["play", "play", "verb", "female", "singular", "first", "na", "simple-present"],
+                    ["play", "play", "verb", "male", "plural", "first", "na", "simple-present"],
+                    ["play", "play", "verb", "female", "plural", "first", "na", "simple-present"],
+                    ["play", "play", "verb", "male", "singular", "second", "na", "simple-present"],
+                    ["play", "play", "verb", "female", "singular", "second", "na", "simple-present"],
+                    ["play", "play", "verb", "male", "plural", "second", "na", "simple-present"],
+                    ["play", "play", "verb", "female", "plural", "second", "na", "simple-present"],
+                    ["play", "play", "verb", "male", "singular", "first", "na", "simple-future"],
+                    ["play", "play", "verb", "female", "singular", "first", "na", "simple-future"],
+                    ["play", "play", "verb", "male", "plural", "first", "na", "simple-future"],
+                    ["play", "play", "verb", "female", "plural", "first", "na", "simple-future"],
+                    ["play", "play", "verb", "male", "singular", "second", "na", "simple-future"],
+                    ["play", "play", "verb", "female", "singular", "second", "na", "simple-future"],
+                    ["play", "play", "verb", "male", "plural", "second", "na", "simple-future"],
+                    ["play", "play", "verb", "female", "plural", "second", "na", "simple-future"],
+                    ["play", "play", "verb", "male", "plural", "third", "na", "simple-present"],
+                    ["play", "play", "verb", "female", "plural", "third", "na", "simple-present"],
+                    ["play", "play", "verb", "male", "plural", "third", "na", "simple-future"],
+                    ["play", "play", "verb", "female", "plural", "third", "na", "simple-future"],
+                    ["play", "play", "noun", "na", "singular", "na", "na", "na"]
+                ],
+                "plays": [
+                    ["plays", "play", "verb", "male", "singular", "third", "na", "simple-present"],
+                    ["plays", "play", "verb", "female", "singular", "third", "na", "simple-present"],
+                    ["plays", "play", "noun", "na", "plural", "na", "na", "na"]
+                ],
+                "playing": [ // Added correct answers for "playing"
+                    ["playing", "play", "verb", "male", "singular", "first", "na", "present-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "first", "na", "present-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "first", "na", "present-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "first", "na", "present-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "second", "na", "present-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "second", "na", "present-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "second", "na", "present-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "second", "na", "present-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "third", "na", "present-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "third", "na", "present-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "third", "na", "present-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "third", "na", "present-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "first", "na", "past-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "first", "na", "past-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "first", "na", "past-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "first", "na", "past-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "second", "na", "past-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "second", "na", "past-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "second", "na", "past-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "second", "na", "past-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "third", "na", "past-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "third", "na", "past-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "third", "na", "past-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "third", "na", "past-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "first", "na", "future-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "first", "na", "future-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "first", "na", "future-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "first", "na", "future-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "second", "na", "future-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "second", "na", "future-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "second", "na", "future-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "second", "na", "future-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "third", "na", "future-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "third", "na", "future-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "third", "na", "future-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "third", "na", "future-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "first", "na", "present-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "first", "na", "present-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "first", "na", "present-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "first", "na", "present-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "second", "na", "present-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "second", "na", "present-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "second", "na", "present-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "second", "na", "present-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "third", "na", "present-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "third", "na", "present-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "third", "na", "present-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "third", "na", "present-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "first", "na", "past-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "first", "na", "past-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "first", "na", "past-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "first", "na", "past-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "second", "na", "past-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "second", "na", "past-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "second", "na", "past-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "second", "na", "past-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "third", "na", "past-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "third", "na", "past-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "third", "na", "past-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "third", "na", "past-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "first", "na", "future-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "first", "na", "future-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "first", "na", "future-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "first", "na", "future-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "second", "na", "future-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "second", "na", "future-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "second", "na", "future-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "second", "na", "future-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "singular", "third", "na", "future-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "singular", "third", "na", "future-perfect-continuous"],
+                    ["playing", "play", "verb", "male", "plural", "third", "na", "future-perfect-continuous"],
+                    ["playing", "play", "verb", "female", "plural", "third", "na", "future-perfect-continuous"]
+                ],
+                "played": [
+                    ["played", "play", "verb", "male", "singular", "first", "na", "simple-past"],
+                    ["played", "play", "verb", "female", "singular", "first", "na", "simple-past"],
+                    ["played", "play", "verb", "male", "plural", "first", "na", "simple-past"],
+                    ["played", "play", "verb", "female", "plural", "first", "na", "simple-past"],
+                    ["played", "play", "verb", "male", "singular", "second", "na", "simple-past"],
+                    ["played", "play", "verb", "female", "singular", "second", "na", "simple-past"],
+                    ["played", "play", "verb", "male", "plural", "second", "na", "simple-past"],
+                    ["played", "play", "verb", "female", "plural", "second", "na", "simple-past"],
+                    ["played", "play", "verb", "male", "singular", "third", "na", "simple-past"],
+                    ["played", "play", "verb", "female", "singular", "third", "na", "simple-past"],
+                    ["played", "play", "verb", "male", "plural", "third", "na", "simple-past"],
+                    ["played", "play", "verb", "female", "plural", "third", "na", "simple-past"],
+                    ["played", "play", "verb", "male", "singular", "first", "na", "present-perfect"],
+                    ["played", "play", "verb", "female", "singular", "first", "na", "present-perfect"],
+                    ["played", "play", "verb", "male", "plural", "first", "na", "present-perfect"],
+                    ["played", "play", "verb", "female", "plural", "first", "na", "present-perfect"],
+                    ["played", "play", "verb", "male", "singular", "second", "na", "present-perfect"],
+                    ["played", "play", "verb", "female", "singular", "second", "na", "present-perfect"],
+                    ["played", "play", "verb", "male", "plural", "second", "na", "present-perfect"],
+                    ["played", "play", "verb", "female", "plural", "second", "na", "present-perfect"],
+                    ["played", "play", "verb", "male", "singular", "third", "na", "present-perfect"],
+                    ["played", "play", "verb", "female", "singular", "third", "na", "present-perfect"],
+                    ["played", "play", "verb", "male", "plural", "third", "na", "present-perfect"],
+                    ["played", "play", "verb", "female", "plural", "third", "na", "present-perfect"],
+                    ["played", "play", "verb", "male", "singular", "first", "na", "past-perfect"],
+                    ["played", "play", "verb", "female", "singular", "first", "na", "past-perfect"],
+                    ["played", "play", "verb", "male", "plural", "first", "na", "past-perfect"],
+                    ["played", "play", "verb", "female", "plural", "first", "na", "past-perfect"],
+                    ["played", "play", "verb", "male", "singular", "second", "na", "past-perfect"],
+                    ["played", "play", "verb", "female", "singular", "second", "na", "past-perfect"],
+                    ["played", "play", "verb", "male", "plural", "second", "na", "past-perfect"],
+                    ["played", "play", "verb", "female", "plural", "second", "na", "past-perfect"],
+                    ["played", "play", "verb", "male", "singular", "third", "na", "past-perfect"],
+                    ["played", "play", "verb", "female", "singular", "third", "na", "past-perfect"],
+                    ["played", "play", "verb", "male", "plural", "third", "na", "past-perfect"],
+                    ["played", "play", "verb", "female", "plural", "third", "na", "past-perfect"],
+                    ["played", "play", "verb", "male", "singular", "first", "na", "future-perfect"],
+                    ["played", "play", "verb", "female", "singular", "first", "na", "future-perfect"],
+                    ["played", "play", "verb", "male", "plural", "first", "na", "future-perfect"],
+                    ["played", "play", "verb", "female", "plural", "first", "na", "future-perfect"],
+                    ["played", "play", "verb", "male", "singular", "second", "na", "future-perfect"],
+                    ["played", "play", "verb", "female", "singular", "second", "na", "future-perfect"],
+                    ["played", "play", "verb", "male", "plural", "second", "na", "future-perfect"],
+                    ["played", "play", "verb", "female", "plural", "second", "na", "future-perfect"],
+                    ["played", "play", "verb", "male", "singular", "third", "na", "future-perfect"],
+                    ["played", "play", "verb", "female", "singular", "third", "na", "future-perfect"],
+                    ["played", "play", "verb", "male", "plural", "third", "na", "future-perfect"],
+                    ["played", "play", "verb", "female", "plural", "third", "na", "future-perfect"]
+                ],
+                "train": [
+                    ["train", "train", "verb", "male", "singular", "first", "na", "simple-present"],
+                    ["train", "train", "verb", "female", "singular", "first", "na", "simple-present"],
+                    ["train", "train", "verb", "male", "plural", "first", "na", "simple-present"],
+                    ["train", "train", "verb", "female", "plural", "first", "na", "simple-present"],
+                    ["train", "train", "verb", "male", "singular", "second", "na", "simple-present"],
+                    ["train", "train", "verb", "female", "singular", "second", "na", "simple-present"],
+                    ["train", "train", "verb", "male", "plural", "second", "na", "simple-present"],
+                    ["train", "train", "verb", "female", "plural", "second", "na", "simple-present"],
+                    ["train", "train", "verb", "male", "singular", "first", "na", "simple-future"],
+                    ["train", "train", "verb", "female", "singular", "first", "na", "simple-future"],
+                    ["train", "train", "verb", "male", "plural", "first", "na", "simple-future"],
+                    ["train", "train", "verb", "female", "plural", "first", "na", "simple-future"],
+                    ["train", "train", "verb", "male", "singular", "second", "na", "simple-future"],
+                    ["train", "train", "verb", "female", "singular", "second", "na", "simple-future"],
+                    ["train", "train", "verb", "male", "plural", "second", "na", "simple-future"],
+                    ["train", "train", "verb", "female", "plural", "second", "na", "simple-future"],
+                    ["train", "train", "verb", "male", "plural", "third", "na", "simple-present"],
+                    ["train", "train", "verb", "female", "plural", "third", "na", "simple-present"],
+                    ["train", "train", "verb", "male", "plural", "third", "na", "simple-future"],
+                    ["train", "train", "verb", "female", "plural", "third", "na", "simple-future"],
+                    ["train", "train", "noun", "na", "singular", "na", "na", "na"]
+                ],
+                "trains": [
+                    ["trains", "train", "verb", "male", "singular", "third", "na", "simple-present"],
+                    ["trains", "train", "verb", "female", "singular", "third", "na", "simple-present"],
+                    ["trains", "train", "noun", "na", "plural", "na", "na", "na"]
+                ],
+                "training": [
+                    ["training", "train", "verb", "male", "singular", "first", "na", "present-continuous"],
+                    ["training", "train", "verb", "female", "singular", "first", "na", "present-continuous"],
+                    ["training", "train", "verb", "male", "plural", "first", "na", "present-continuous"],
+                    ["training", "train", "verb", "female", "plural", "first", "na", "present-continuous"],
+                    ["training", "train", "verb", "male", "singular", "second", "na", "present-continuous"],
+                    ["training", "train", "verb", "female", "singular", "second", "na", "present-continuous"],
+                    ["training", "train", "verb", "male", "plural", "second", "na", "present-continuous"],
+                    ["training", "train", "verb", "female", "plural", "second", "na", "present-continuous"],
+                    ["training", "train", "verb", "male", "singular", "third", "na", "present-continuous"],
+                    ["training", "train", "verb", "female", "singular", "third", "na", "present-continuous"],
+                    ["training", "train", "verb", "male", "plural", "third", "na", "present-continuous"],
+                    ["training", "train", "verb", "female", "plural", "third", "na", "present-continuous"],
+                    ["training", "train", "verb", "male", "singular", "first", "na", "past-continuous"],
+                    ["training", "train", "verb", "female", "singular", "first", "na", "past-continuous"],
+                    ["training", "train", "verb", "male", "plural", "first", "na", "past-continuous"],
+                    ["training", "train", "verb", "female", "plural", "first", "na", "past-continuous"],
+                    ["training", "train", "verb", "male", "singular", "second", "na", "past-continuous"],
+                    ["training", "train", "verb", "female", "singular", "second", "na", "past-continuous"],
+                    ["training", "train", "verb", "male", "plural", "second", "na", "past-continuous"],
+                    ["training", "train", "verb", "female", "plural", "second", "na", "past-continuous"],
+                    ["training", "train", "verb", "male", "singular", "third", "na", "past-continuous"],
+                    ["training", "train", "verb", "female", "singular", "third", "na", "past-continuous"],
+                    ["training", "train", "verb", "male", "plural", "third", "na", "past-continuous"],
+                    ["training", "train", "verb", "female", "plural", "third", "na", "past-continuous"],
+                    ["training", "train", "verb", "male", "singular", "first", "na", "future-continuous"],
+                    ["training", "train", "verb", "female", "singular", "first", "na", "future-continuous"],
+                    ["training", "train", "verb", "male", "plural", "first", "na", "future-continuous"],
+                    ["training", "train", "verb", "female", "plural", "first", "na", "future-continuous"],
+                    ["training", "train", "verb", "male", "singular", "second", "na", "future-continuous"],
+                    ["training", "train", "verb", "female", "singular", "second", "na", "future-continuous"],
+                    ["training", "train", "verb", "male", "plural", "second", "na", "future-continuous"],
+                    ["training", "train", "verb", "female", "plural", "second", "na", "future-continuous"],
+                    ["training", "train", "verb", "male", "singular", "third", "na", "future-continuous"],
+                    ["training", "train", "verb", "female", "singular", "third", "na", "future-continuous"],
+                    ["training", "train", "verb", "male", "plural", "third", "na", "future-continuous"],
+                    ["training", "train", "verb", "female", "plural", "third", "na", "future-continuous"],
+                    ["training", "train", "verb", "male", "singular", "first", "na", "present-perfect-continuous"],
+                    ["training", "train", "verb", "female", "singular", "first", "na", "present-perfect-continuous"],
+                    ["training", "train", "verb", "male", "plural", "first", "na", "present-perfect-continuous"],
+                    ["training", "train", "verb", "female", "plural", "first", "na", "present-perfect-continuous"],
+                    ["training", "train", "verb", "male", "singular", "second", "na", "present-perfect-continuous"],
+                    ["training", "train", "verb", "female", "singular", "second", "na", "present-perfect-continuous"],
+                    ["training", "train", "verb", "male", "plural", "second", "na", "present-perfect-continuous"],
+                    ["training", "train", "verb", "female", "plural", "second", "na", "present-perfect-continuous"],
+                    ["training", "train", "verb", "male", "singular", "third", "na", "present-perfect-continuous"],
+                    ["training", "train", "verb", "female", "singular", "third", "na", "present-perfect-continuous"],
+                    ["training", "train", "verb", "male", "plural", "third", "na", "present-perfect-continuous"],
+                    ["training", "train", "verb", "female", "plural", "third", "na", "present-perfect-continuous"],
+                    ["training", "train", "verb", "male", "singular", "first", "na", "past-perfect-continuous"],
+                    ["training", "train", "verb", "female", "singular", "first", "na", "past-perfect-continuous"],
+                    ["training", "train", "verb", "male", "plural", "first", "na", "past-perfect-continuous"],
+                    ["training", "train", "verb", "female", "plural", "first", "na", "past-perfect-continuous"],
+                    ["training", "train", "verb", "male", "singular", "second", "na", "past-perfect-continuous"],
+                    ["training", "train", "verb", "female", "singular", "second", "na", "past-perfect-continuous"],
+                    ["training", "train", "verb", "male", "plural", "second", "na", "past-perfect-continuous"],
+                    ["training", "train", "verb", "female", "plural", "second", "na", "past-perfect-continuous"],
+                    ["training", "train", "verb", "male", "singular", "third", "na", "past-perfect-continuous"],
+                    ["training", "train", "verb", "female", "singular", "third", "na", "past-perfect-continuous"],
+                    ["training", "train", "verb", "male", "plural", "third", "na", "past-perfect-continuous"],
+                    ["training", "train", "verb", "female", "plural", "third", "na", "past-perfect-continuous"],
+                    ["training", "train", "verb", "male", "singular", "first", "na", "future-perfect-continuous"],
+                    ["training", "train", "verb", "female", "singular", "first", "na", "future-perfect-continuous"],
+                    ["training", "train", "verb", "male", "plural", "first", "na", "future-perfect-continuous"],
+                    ["training", "train", "verb", "female", "plural", "first", "na", "future-perfect-continuous"],
+                    ["training", "train", "verb", "male", "singular", "second", "na", "future-perfect-continuous"],
+                    ["training", "train", "verb", "female", "singular", "second", "na", "future-perfect-continuous"],
+                    ["training", "train", "verb", "male", "plural", "second", "na", "future-perfect-continuous"],
+                    ["training", "train", "verb", "female", "plural", "second", "na", "future-perfect-continuous"],
+                    ["training", "train", "verb", "male", "singular", "third", "na", "future-perfect-continuous"],
+                    ["training", "train", "verb", "female", "singular", "third", "na", "future-perfect-continuous"],
+                    ["training", "train", "verb", "male", "plural", "third", "na", "future-perfect-continuous"],
+                    ["training", "train", "verb", "female", "plural", "third", "na", "future-perfect-continuous"],
+                    ["training", "train", "noun", "na", "singular", "na", "na", "na"],
+                    ["training", "train", "noun", "na", "plural", "na", "na", "na"]
+                ],
+                "trained": [
+                    ["trained", "train", "verb", "male", "singular", "first", "na", "simple-past"],
+                    ["trained", "train", "verb", "female", "singular", "first", "na", "simple-past"],
+                    ["trained", "train", "verb", "male", "plural", "first", "na", "simple-past"],
+                    ["trained", "train", "verb", "female", "plural", "first", "na", "simple-past"],
+                    ["trained", "train", "verb", "male", "singular", "second", "na", "simple-past"],
+                    ["trained", "train", "verb", "female", "singular", "second", "na", "simple-past"],
+                    ["trained", "train", "verb", "male", "plural", "second", "na", "simple-past"],
+                    ["trained", "train", "verb", "female", "plural", "second", "na", "simple-past"],
+                    ["trained", "train", "verb", "male", "singular", "third", "na", "simple-past"],
+                    ["trained", "train", "verb", "female", "singular", "third", "na", "simple-past"],
+                    ["trained", "train", "verb", "male", "plural", "third", "na", "simple-past"],
+                    ["trained", "train", "verb", "female", "plural", "third", "na", "simple-past"],
+                    ["trained", "train", "verb", "male", "singular", "first", "na", "present-perfect"],
+                    ["trained", "train", "verb", "female", "singular", "first", "na", "present-perfect"],
+                    ["trained", "train", "verb", "male", "plural", "first", "na", "present-perfect"],
+                    ["trained", "train", "verb", "female", "plural", "first", "na", "present-perfect"],
+                    ["trained", "train", "verb", "male", "singular", "second", "na", "present-perfect"],
+                    ["trained", "train", "verb", "female", "singular", "second", "na", "present-perfect"],
+                    ["trained", "train", "verb", "male", "plural", "second", "na", "present-perfect"],
+                    ["trained", "train", "verb", "female", "plural", "second", "na", "present-perfect"],
+                    ["trained", "train", "verb", "male", "singular", "third", "na", "present-perfect"],
+                    ["trained", "train", "verb", "female", "singular", "third", "na", "present-perfect"],
+                    ["trained", "train", "verb", "male", "plural", "third", "na", "present-perfect"],
+                    ["trained", "train", "verb", "female", "plural", "third", "na", "present-perfect"],
+                    ["trained", "train", "verb", "male", "singular", "first", "na", "past-perfect"],
+                    ["trained", "train", "verb", "female", "singular", "first", "na", "past-perfect"],
+                    ["trained", "train", "verb", "male", "plural", "first", "na", "past-perfect"],
+                    ["trained", "train", "verb", "female", "plural", "first", "na", "past-perfect"],
+                    ["trained", "train", "verb", "male", "singular", "second", "na", "past-perfect"],
+                    ["trained", "train", "verb", "female", "singular", "second", "na", "past-perfect"],
+                    ["trained", "train", "verb", "male", "plural", "second", "na", "past-perfect"],
+                    ["trained", "train", "verb", "female", "plural", "second", "na", "past-perfect"],
+                    ["trained", "train", "verb", "male", "singular", "third", "na", "past-perfect"],
+                    ["trained", "train", "verb", "female", "singular", "third", "na", "past-perfect"],
+                    ["trained", "train", "verb", "male", "plural", "third", "na", "past-perfect"],
+                    ["trained", "train", "verb", "female", "plural", "third", "na", "past-perfect"],
+                    ["trained", "train", "verb", "male", "singular", "first", "na", "future-perfect"],
+                    ["trained", "train", "verb", "female", "singular", "first", "na", "future-perfect"],
+                    ["trained", "train", "verb", "male", "plural", "first", "na", "future-perfect"],
+                    ["trained", "train", "verb", "female", "plural", "first", "na", "future-perfect"],
+                    ["trained", "train", "verb", "male", "singular", "second", "na", "future-perfect"],
+                    ["trained", "train", "verb", "female", "singular", "second", "na", "future-perfect"],
+                    ["trained", "train", "verb", "male", "plural", "second", "na", "future-perfect"],
+                    ["trained", "train", "verb", "female", "plural", "second", "na", "future-perfect"],
+                    ["trained", "train", "verb", "male", "singular", "third", "na", "future-perfect"],
+                    ["trained", "train", "verb", "female", "singular", "third", "na", "future-perfect"],
+                    ["trained", "train", "verb", "male", "plural", "third", "na", "future-perfect"],
+                    ["trained", "train", "verb", "female", "plural", "third", "na", "future-perfect"]
+                ],
+                "study": [
+                    ["study", "study", "verb", "male", "singular", "first", "na", "simple-present"],
+                    ["study", "study", "verb", "female", "singular", "first", "na", "simple-present"],
+                    ["study", "study", "verb", "male", "plural", "first", "na", "simple-present"],
+                    ["study", "study", "verb", "female", "plural", "first", "na", "simple-present"],
+                    ["study", "study", "verb", "male", "singular", "second", "na", "simple-present"],
+                    ["study", "study", "verb", "female", "singular", "second", "na", "simple-present"],
+                    ["study", "study", "verb", "male", "plural", "second", "na", "simple-present"],
+                    ["study", "study", "verb", "female", "plural", "second", "na", "simple-present"],
+                    ["study", "study", "verb", "male", "singular", "first", "na", "simple-future"],
+                    ["study", "study", "verb", "female", "singular", "first", "na", "simple-future"],
+                    ["study", "study", "verb", "male", "plural", "first", "na", "simple-future"],
+                    ["study", "study", "verb", "female", "plural", "first", "na", "simple-future"],
+                    ["study", "study", "verb", "male", "singular", "second", "na", "simple-future"],
+                    ["study", "study", "verb", "female", "singular", "second", "na", "simple-future"],
+                    ["study", "study", "verb", "male", "plural", "second", "na", "simple-future"],
+                    ["study", "study", "verb", "female", "plural", "second", "na", "simple-future"],
+                    ["study", "study", "verb", "male", "plural", "third", "na", "simple-present"],
+                    ["study", "study", "verb", "female", "plural", "third", "na", "simple-present"],
+                    ["study", "study", "verb", "male", "plural", "third", "na", "simple-future"],
+                    ["study", "study", "verb", "female", "plural", "third", "na", "simple-future"],
+                    ["study", "study", "noun", "na", "singular", "na", "na", "na"]
+                ],
+                "studies": [
+                    ["studies", "study", "verb", "male", "singular", "third", "na", "simple-present"],
+                    ["studies", "study", "verb", "female", "singular", "third", "na", "simple-present"],
+                    ["studies", "study", "verb", "male", "singular", "first", "na", "simple-past"],
+                    ["studies", "study", "verb", "female", "singular", "first", "na", "simple-past"],
+                    ["studies", "study", "verb", "male", "plural", "first", "na", "simple-past"],
+                    ["studies", "study", "verb", "female", "plural", "first", "na", "simple-past"],
+                    ["studies", "study", "verb", "male", "singular", "second", "na", "simple-past"],
+                    ["studies", "study", "verb", "female", "singular", "second", "na", "simple-past"],
+                    ["studies", "study", "verb", "male", "plural", "second", "na", "simple-past"],
+                    ["studies", "study", "verb", "female", "plural", "second", "na", "simple-past"],
+                    ["studies", "study", "verb", "male", "singular", "third", "na", "simple-past"],
+                    ["studies", "study", "verb", "female", "singular", "third", "na", "simple-past"],
+                    ["studies", "study", "verb", "male", "plural", "third", "na", "simple-past"],
+                    ["studies", "study", "verb", "female", "plural", "third", "na", "simple-past"],
+                    ["studies", "study", "verb", "male", "singular", "first", "na", "present-perfect"],
+                    ["studies", "study", "verb", "female", "singular", "first", "na", "present-perfect"],
+                    ["studies", "study", "verb", "male", "plural", "first", "na", "present-perfect"],
+                    ["studies", "study", "verb", "female", "plural", "first", "na", "present-perfect"],
+                    ["studies", "study", "verb", "male", "singular", "second", "na", "present-perfect"],
+                    ["studies", "study", "verb", "female", "singular", "second", "na", "present-perfect"],
+                    ["studies", "study", "verb", "male", "plural", "second", "na", "present-perfect"],
+                    ["studies", "study", "verb", "female", "plural", "second", "na", "present-perfect"],
+                    ["studies", "study", "verb", "male", "singular", "third", "na", "present-perfect"],
+                    ["studies", "study", "verb", "female", "singular", "third", "na", "present-perfect"],
+                    ["studies", "study", "verb", "male", "plural", "third", "na", "present-perfect"],
+                    ["studies", "study", "verb", "female", "plural", "third", "na", "present-perfect"],
+                    ["studies", "study", "verb", "male", "singular", "first", "na", "past-perfect"],
+                    ["studies", "study", "verb", "female", "singular", "first", "na", "past-perfect"],
+                    ["studies", "study", "verb", "male", "plural", "first", "na", "past-perfect"],
+                    ["studies", "study", "verb", "female", "plural", "first", "na", "past-perfect"],
+                    ["studies", "study", "verb", "male", "singular", "second", "na", "past-perfect"],
+                    ["studies", "study", "verb", "female", "singular", "second", "na", "past-perfect"],
+                    ["studies", "study", "verb", "male", "plural", "second", "na", "past-perfect"],
+                    ["studies", "study", "verb", "female", "plural", "second", "na", "past-perfect"],
+                    ["studies", "study", "verb", "male", "singular", "third", "na", "past-perfect"],
+                    ["studies", "study", "verb", "female", "singular", "third", "na", "past-perfect"],
+                    ["studies", "study", "verb", "male", "plural", "third", "na", "past-perfect"],
+                    ["studies", "study", "verb", "female", "plural", "third", "na", "past-perfect"],
+                    ["studies", "study", "verb", "male", "singular", "first", "na", "future-perfect"],
+                    ["studies", "study", "verb", "female", "singular", "first", "na", "future-perfect"],
+                    ["studies", "study", "verb", "male", "plural", "first", "na", "future-perfect"],
+                    ["studies", "study", "verb", "female", "plural", "first", "na", "future-perfect"],
+                    ["studies", "study", "verb", "male", "singular", "second", "na", "future-perfect"],
+                    ["studies", "study", "verb", "female", "singular", "second", "na", "future-perfect"],
+                    ["studies", "study", "verb", "male", "plural", "second", "na", "future-perfect"],
+                    ["studies", "study", "verb", "female", "plural", "second", "na", "future-perfect"],
+                    ["studies", "study", "verb", "male", "singular", "third", "na", "future-perfect"],
+                    ["studies", "study", "verb", "female", "singular", "third", "na", "future-perfect"],
+                    ["studies", "study", "verb", "male", "plural", "third", "na", "future-perfect"],
+                    ["studies", "study", "verb", "female", "plural", "third", "na", "future-perfect"],
+                    ["studies", "study", "noun", "na", "plural", "na", "na", "na"]
+                ],
+                "studying": [
+                    ["studying", "study", "verb", "male", "singular", "first", "na", "present-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "first", "na", "present-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "first", "na", "present-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "first", "na", "present-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "second", "na", "present-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "second", "na", "present-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "second", "na", "present-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "second", "na", "present-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "third", "na", "present-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "third", "na", "present-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "third", "na", "present-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "third", "na", "present-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "first", "na", "past-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "first", "na", "past-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "first", "na", "past-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "first", "na", "past-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "second", "na", "past-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "second", "na", "past-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "second", "na", "past-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "second", "na", "past-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "third", "na", "past-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "third", "na", "past-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "third", "na", "past-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "third", "na", "past-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "first", "na", "future-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "first", "na", "future-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "first", "na", "future-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "first", "na", "future-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "second", "na", "future-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "second", "na", "future-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "second", "na", "future-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "second", "na", "future-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "third", "na", "future-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "third", "na", "future-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "third", "na", "future-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "third", "na", "future-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "first", "na", "present-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "first", "na", "present-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "first", "na", "present-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "first", "na", "present-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "second", "na", "present-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "second", "na", "present-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "second", "na", "present-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "second", "na", "present-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "third", "na", "present-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "third", "na", "present-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "third", "na", "present-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "third", "na", "present-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "first", "na", "past-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "first", "na", "past-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "first", "na", "past-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "first", "na", "past-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "second", "na", "past-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "second", "na", "past-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "second", "na", "past-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "second", "na", "past-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "third", "na", "past-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "third", "na", "past-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "third", "na", "past-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "third", "na", "past-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "first", "na", "future-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "first", "na", "future-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "first", "na", "future-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "first", "na", "future-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "second", "na", "future-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "second", "na", "future-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "second", "na", "future-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "second", "na", "future-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "singular", "third", "na", "future-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "singular", "third", "na", "future-perfect-continuous"],
+                    ["studying", "study", "verb", "male", "plural", "third", "na", "future-perfect-continuous"],
+                    ["studying", "study", "verb", "female", "plural", "third", "na", "future-perfect-continuous"]
+                ],
+                "watch": [
+                    ["watch", "watch", "verb", "male", "singular", "first", "na", "simple-present"],
+                    ["watch", "watch", "verb", "female", "singular", "first", "na", "simple-present"],
+                    ["watch", "watch", "verb", "male", "plural", "first", "na", "simple-present"],
+                    ["watch", "watch", "verb", "female", "plural", "first", "na", "simple-present"],
+                    ["watch", "watch", "verb", "male", "singular", "second", "na", "simple-present"],
+                    ["watch", "watch", "verb", "female", "singular", "second", "na", "simple-present"],
+                    ["watch", "watch", "verb", "male", "plural", "second", "na", "simple-present"],
+                    ["watch", "watch", "verb", "female", "plural", "second", "na", "simple-present"],
+                    ["watch", "watch", "verb", "male", "singular", "first", "na", "simple-future"],
+                    ["watch", "watch", "verb", "female", "singular", "first", "na", "simple-future"],
+                    ["watch", "watch", "verb", "male", "plural", "first", "na", "simple-future"],
+                    ["watch", "watch", "verb", "female", "plural", "first", "na", "simple-future"],
+                    ["watch", "watch", "verb", "male", "singular", "second", "na", "simple-future"],
+                    ["watch", "watch", "verb", "female", "singular", "second", "na", "simple-future"],
+                    ["watch", "watch", "verb", "male", "plural", "second", "na", "simple-future"],
+                    ["watch", "watch", "verb", "female", "plural", "second", "na", "simple-future"],
+                    ["watch", "watch", "verb", "male", "plural", "third", "na", "simple-present"],
+                    ["watch", "watch", "verb", "female", "plural", "third", "na", "simple-present"],
+                    ["watch", "watch", "verb", "male", "plural", "third", "na", "simple-future"],
+                    ["watch", "watch", "verb", "female", "plural", "third", "na", "simple-future"],
+                    ["watch", "watch", "noun", "na", "singular", "na", "na", "na"]
+                ],
+                "watches": [
+                    ["watches", "watch", "verb", "male", "singular", "third", "na", "simple-present"],
+                    ["watches", "watch", "verb", "female", "singular", "third", "na", "simple-present"],
+                    ["watches", "watch", "noun", "na", "plural", "na", "na", "na"]
+                ],
+                "watching": [
+                    ["watching", "watch", "verb", "male", "singular", "first", "na", "present-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "first", "na", "present-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "first", "na", "present-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "first", "na", "present-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "second", "na", "present-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "second", "na", "present-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "second", "na", "present-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "second", "na", "present-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "third", "na", "present-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "third", "na", "present-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "third", "na", "present-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "third", "na", "present-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "first", "na", "past-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "first", "na", "past-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "first", "na", "past-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "first", "na", "past-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "second", "na", "past-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "second", "na", "past-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "second", "na", "past-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "second", "na", "past-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "third", "na", "past-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "third", "na", "past-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "third", "na", "past-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "third", "na", "past-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "first", "na", "future-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "first", "na", "future-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "first", "na", "future-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "first", "na", "future-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "second", "na", "future-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "second", "na", "future-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "second", "na", "future-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "second", "na", "future-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "third", "na", "future-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "third", "na", "future-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "third", "na", "future-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "third", "na", "future-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "first", "na", "present-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "first", "na", "present-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "first", "na", "present-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "first", "na", "present-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "second", "na", "present-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "second", "na", "present-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "second", "na", "present-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "second", "na", "present-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "third", "na", "present-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "third", "na", "present-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "third", "na", "present-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "third", "na", "present-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "first", "na", "past-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "first", "na", "past-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "first", "na", "past-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "first", "na", "past-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "second", "na", "past-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "second", "na", "past-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "second", "na", "past-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "second", "na", "past-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "third", "na", "past-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "third", "na", "past-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "third", "na", "past-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "third", "na", "past-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "first", "na", "future-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "first", "na", "future-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "first", "na", "future-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "first", "na", "future-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "second", "na", "future-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "second", "na", "future-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "second", "na", "future-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "second", "na", "future-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "singular", "third", "na", "future-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "singular", "third", "na", "future-perfect-continuous"],
+                    ["watching", "watch", "verb", "male", "plural", "third", "na", "future-perfect-continuous"],
+                    ["watching", "watch", "verb", "female", "plural", "third", "na", "future-perfect-continuous"]
+                ],
+                "watched": [
+                    ["watched", "watch", "verb", "male", "singular", "first", "na", "simple-past"],
+                    ["watched", "watch", "verb", "female", "singular", "first", "na", "simple-past"],
+                    ["watched", "watch", "verb", "male", "plural", "first", "na", "simple-past"],
+                    ["watched", "watch", "verb", "female", "plural", "first", "na", "simple-past"],
+                    ["watched", "watch", "verb", "male", "singular", "second", "na", "simple-past"],
+                    ["watched", "watch", "verb", "female", "singular", "second", "na", "simple-past"],
+                    ["watched", "watch", "verb", "male", "plural", "second", "na", "simple-past"],
+                    ["watched", "watch", "verb", "female", "plural", "second", "na", "simple-past"],
+                    ["watched", "watch", "verb", "male", "singular", "third", "na", "simple-past"],
+                    ["watched", "watch", "verb", "female", "singular", "third", "na", "simple-past"],
+                    ["watched", "watch", "verb", "male", "plural", "third", "na", "simple-past"],
+                    ["watched", "watch", "verb", "female", "plural", "third", "na", "simple-past"],
+                    ["watched", "watch", "verb", "male", "singular", "first", "na", "present-perfect"],
+                    ["watched", "watch", "verb", "female", "singular", "first", "na", "present-perfect"],
+                    ["watched", "watch", "verb", "male", "plural", "first", "na", "present-perfect"],
+                    ["watched", "watch", "verb", "female", "plural", "first", "na", "present-perfect"],
+                    ["watched", "watch", "verb", "male", "singular", "second", "na", "present-perfect"],
+                    ["watched", "watch", "verb", "female", "singular", "second", "na", "present-perfect"],
+                    ["watched", "watch", "verb", "male", "plural", "second", "na", "present-perfect"],
+                    ["watched", "watch", "verb", "female", "plural", "second", "na", "present-perfect"],
+                    ["watched", "watch", "verb", "male", "singular", "third", "na", "present-perfect"],
+                    ["watched", "watch", "verb", "female", "singular", "third", "na", "present-perfect"],
+                    ["watched", "watch", "verb", "male", "plural", "third", "na", "present-perfect"],
+                    ["watched", "watch", "verb", "female", "plural", "third", "na", "present-perfect"],
+                    ["watched", "watch", "verb", "male", "singular", "first", "na", "past-perfect"],
+                    ["watched", "watch", "verb", "female", "singular", "first", "na", "past-perfect"],
+                    ["watched", "watch", "verb", "male", "plural", "first", "na", "past-perfect"],
+                    ["watched", "watch", "verb", "female", "plural", "first", "na", "past-perfect"],
+                    ["watched", "watch", "verb", "male", "singular", "second", "na", "past-perfect"],
+                    ["watched", "watch", "verb", "female", "singular", "second", "na", "past-perfect"],
+                    ["watched", "watch", "verb", "male", "plural", "second", "na", "past-perfect"],
+                    ["watched", "watch", "verb", "female", "plural", "second", "na", "past-perfect"],
+                    ["watched", "watch", "verb", "male", "singular", "third", "na", "past-perfect"],
+                    ["watched", "watch", "verb", "female", "singular", "third", "na", "past-perfect"],
+                    ["watched", "watch", "verb", "male", "plural", "third", "na", "past-perfect"],
+                    ["watched", "watch", "verb", "female", "plural", "third", "na", "past-perfect"],
+                    ["watched", "watch", "verb", "male", "singular", "first", "na", "future-perfect"],
+                    ["watched", "watch", "verb", "female", "singular", "first", "na", "future-perfect"],
+                    ["watched", "watch", "verb", "male", "plural", "first", "na", "future-perfect"],
+                    ["watched", "watch", "verb", "female", "plural", "first", "na", "future-perfect"],
+                    ["watched", "watch", "verb", "male", "singular", "second", "na", "future-perfect"],
+                    ["watched", "watch", "verb", "female", "singular", "second", "na", "future-perfect"],
+                    ["watched", "watch", "verb", "male", "plural", "second", "na", "future-perfect"],
+                    ["watched", "watch", "verb", "female", "plural", "second", "na", "future-perfect"],
+                    ["watched", "watch", "verb", "male", "singular", "third", "na", "future-perfect"],
+                    ["watched", "watch", "verb", "female", "singular", "third", "na", "future-perfect"],
+                    ["watched", "watch", "verb", "male", "plural", "third", "na", "future-perfect"],
+                    ["watched", "watch", "verb", "female", "plural", "third", "na", "future-perfect"]
+                ],
+                "walk": [
+                    ["walk", "walk", "verb", "male", "singular", "first", "na", "simple-present"],
+                    ["walk", "walk", "verb", "female", "singular", "first", "na", "simple-present"],
+                    ["walk", "walk", "verb", "male", "plural", "first", "na", "simple-present"],
+                    ["walk", "walk", "verb", "female", "plural", "first", "na", "simple-present"],
+                    ["walk", "walk", "verb", "male", "singular", "second", "na", "simple-present"],
+                    ["walk", "walk", "verb", "female", "singular", "second", "na", "simple-present"],
+                    ["walk", "walk", "verb", "male", "plural", "second", "na", "simple-present"],
+                    ["walk", "walk", "verb", "female", "plural", "second", "na", "simple-present"],
+                    ["walk", "walk", "verb", "male", "singular", "first", "na", "simple-future"],
+                    ["walk", "walk", "verb", "female", "singular", "first", "na", "simple-future"],
+                    ["walk", "walk", "verb", "male", "plural", "first", "na", "simple-future"],
+                    ["walk", "walk", "verb", "female", "plural", "first", "na", "simple-future"],
+                    ["walk", "walk", "verb", "male", "singular", "second", "na", "simple-future"],
+                    ["walk", "walk", "verb", "female", "singular", "second", "na", "simple-future"],
+                    ["walk", "walk", "verb", "male", "plural", "second", "na", "simple-future"],
+                    ["walk", "walk", "verb", "female", "plural", "second", "na", "simple-future"],
+                    ["walk", "walk", "verb", "male", "plural", "third", "na", "simple-present"],
+                    ["walk", "walk", "verb", "female", "plural", "third", "na", "simple-present"],
+                    ["walk", "walk", "verb", "male", "plural", "third", "na", "simple-future"],
+                    ["walk", "walk", "verb", "female", "plural", "third", "na", "simple-future"]
+                ],
+                "walks": [
+                    ["walks", "walk", "verb", "male", "singular", "third", "na", "simple-present"],
+                    ["walks", "walk", "verb", "female", "singular", "third", "na", "simple-present"]
+                ],
+                "walking": [
+                    ["walking", "walk", "verb", "male", "singular", "first", "na", "present-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "first", "na", "present-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "first", "na", "present-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "first", "na", "present-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "second", "na", "present-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "second", "na", "present-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "second", "na", "present-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "second", "na", "present-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "third", "na", "present-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "third", "na", "present-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "third", "na", "present-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "third", "na", "present-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "first", "na", "past-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "first", "na", "past-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "first", "na", "past-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "first", "na", "past-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "second", "na", "past-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "second", "na", "past-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "second", "na", "past-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "second", "na", "past-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "third", "na", "past-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "third", "na", "past-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "third", "na", "past-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "third", "na", "past-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "first", "na", "future-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "first", "na", "future-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "first", "na", "future-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "first", "na", "future-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "second", "na", "future-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "second", "na", "future-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "second", "na", "future-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "second", "na", "future-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "third", "na", "future-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "third", "na", "future-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "third", "na", "future-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "third", "na", "future-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "first", "na", "present-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "first", "na", "present-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "first", "na", "present-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "first", "na", "present-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "second", "na", "present-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "second", "na", "present-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "second", "na", "present-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "second", "na", "present-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "third", "na", "present-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "third", "na", "present-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "third", "na", "present-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "third", "na", "present-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "first", "na", "past-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "first", "na", "past-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "first", "na", "past-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "first", "na", "past-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "second", "na", "past-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "second", "na", "past-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "second", "na", "past-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "second", "na", "past-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "third", "na", "past-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "third", "na", "past-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "third", "na", "past-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "third", "na", "past-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "first", "na", "future-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "first", "na", "future-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "first", "na", "future-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "first", "na", "future-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "second", "na", "future-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "second", "na", "future-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "second", "na", "future-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "second", "na", "future-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "singular", "third", "na", "future-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "singular", "third", "na", "future-perfect-continuous"],
+                    ["walking", "walk", "verb", "male", "plural", "third", "na", "future-perfect-continuous"],
+                    ["walking", "walk", "verb", "female", "plural", "third", "na", "future-perfect-continuous"]
+                ],
+                "walked": [
+                    ["walked", "walk", "verb", "male", "singular", "first", "na", "simple-past"],
+                    ["walked", "walk", "verb", "female", "singular", "first", "na", "simple-past"],
+                    ["walked", "walk", "verb", "male", "plural", "first", "na", "simple-past"],
+                    ["walked", "walk", "verb", "female", "plural", "first", "na", "simple-past"],
+                    ["walked", "walk", "verb", "male", "singular", "second", "na", "simple-past"],
+                    ["walked", "walk", "verb", "female", "singular", "second", "na", "simple-past"],
+                    ["walked", "walk", "verb", "male", "plural", "second", "na", "simple-past"],
+                    ["walked", "walk", "verb", "female", "plural", "second", "na", "simple-past"],
+                    ["walked", "walk", "verb", "male", "singular", "third", "na", "simple-past"],
+                    ["walked", "walk", "verb", "female", "singular", "third", "na", "simple-past"],
+                    ["walked", "walk", "verb", "male", "plural", "third", "na", "simple-past"],
+                    ["walked", "walk", "verb", "female", "plural", "third", "na", "simple-past"],
+                    ["walked", "walk", "verb", "male", "singular", "first", "na", "present-perfect"],
+                    ["walked", "walk", "verb", "female", "singular", "first", "na", "present-perfect"],
+                    ["walked", "walk", "verb", "male", "plural", "first", "na", "present-perfect"],
+                    ["walked", "walk", "verb", "female", "plural", "first", "na", "present-perfect"],
+                    ["walked", "walk", "verb", "male", "singular", "second", "na", "present-perfect"],
+                    ["walked", "walk", "verb", "female", "singular", "second", "na", "present-perfect"],
+                    ["walked", "walk", "verb", "male", "plural", "second", "na", "present-perfect"],
+                    ["walked", "walk", "verb", "female", "plural", "second", "na", "present-perfect"],
+                    ["walked", "walk", "verb", "male", "singular", "third", "na", "present-perfect"],
+                    ["walked", "walk", "verb", "female", "singular", "third", "na", "present-perfect"],
+                    ["walked", "walk", "verb", "male", "plural", "third", "na", "present-perfect"],
+                    ["walked", "walk", "verb", "female", "plural", "third", "na", "present-perfect"],
+                    ["walked", "walk", "verb", "male", "singular", "first", "na", "past-perfect"],
+                    ["walked", "walk", "verb", "female", "singular", "first", "na", "past-perfect"],
+                    ["walked", "walk", "verb", "male", "plural", "first", "na", "past-perfect"],
+                    ["walked", "walk", "verb", "female", "plural", "first", "na", "past-perfect"],
+                    ["walked", "walk", "verb", "male", "singular", "second", "na", "past-perfect"],
+                    ["walked", "walk", "verb", "female", "singular", "second", "na", "past-perfect"],
+                    ["walked", "walk", "verb", "male", "plural", "second", "na", "past-perfect"],
+                    ["walked", "walk", "verb", "female", "plural", "second", "na", "past-perfect"],
+                    ["walked", "walk", "verb", "male", "singular", "third", "na", "past-perfect"],
+                    ["walked", "walk", "verb", "female", "singular", "third", "na", "past-perfect"],
+                    ["walked", "walk", "verb", "male", "plural", "third", "na", "past-perfect"],
+                    ["walked", "walk", "verb", "female", "plural", "third", "na", "past-perfect"],
+                    ["walked", "walk", "verb", "male", "singular", "first", "na", "future-perfect"],
+                    ["walked", "walk", "verb", "female", "singular", "first", "na", "future-perfect"],
+                    ["walked", "walk", "verb", "male", "plural", "first", "na", "future-perfect"],
+                    ["walked", "walk", "verb", "female", "plural", "first", "na", "future-perfect"],
+                    ["walked", "walk", "verb", "male", "singular", "second", "na", "future-perfect"],
+                    ["walked", "walk", "verb", "female", "singular", "second", "na", "future-perfect"],
+                    ["walked", "walk", "verb", "male", "plural", "second", "na", "future-perfect"],
+                    ["walked", "walk", "verb", "female", "plural", "second", "na", "future-perfect"],
+                    ["walked", "walk", "verb", "male", "singular", "third", "na", "future-perfect"],
+                    ["walked", "walk", "verb", "female", "singular", "third", "na", "future-perfect"],
+                    ["walked", "walk", "verb", "male", "plural", "third", "na", "future-perfect"],
+                    ["walked", "walk", "verb", "female", "plural", "third", "na", "future-perfect"]
+                ],
+                "sit": [
+                    ["sit", "sit", "verb", "male", "singular", "first", "na", "simple-present"],
+                    ["sit", "sit", "verb", "female", "singular", "first", "na", "simple-present"],
+                    ["sit", "sit", "verb", "male", "plural", "first", "na", "simple-present"],
+                    ["sit", "sit", "verb", "female", "plural", "first", "na", "simple-present"],
+                    ["sit", "sit", "verb", "male", "singular", "second", "na", "simple-present"],
+                    ["sit", "sit", "verb", "female", "singular", "second", "na", "simple-present"],
+                    ["sit", "sit", "verb", "male", "plural", "second", "na", "simple-present"],
+                    ["sit", "sit", "verb", "female", "plural", "second", "na", "simple-present"],
+                    ["sit", "sit", "verb", "male", "singular", "first", "na", "simple-future"],
+                    ["sit", "sit", "verb", "female", "singular", "first", "na", "simple-future"],
+                    ["sit", "sit", "verb", "male", "plural", "first", "na", "simple-future"],
+                    ["sit", "sit", "verb", "female", "plural", "first", "na", "simple-future"],
+                    ["sit", "sit", "verb", "male", "singular", "second", "na", "simple-future"],
+                    ["sit", "sit", "verb", "female", "singular", "second", "na", "simple-future"],
+                    ["sit", "sit", "verb", "male", "plural", "second", "na", "simple-future"],
+                    ["sit", "sit", "verb", "female", "plural", "second", "na", "simple-future"],
+                    ["sit", "sit", "verb", "male", "plural", "third", "na", "simple-present"],
+                    ["sit", "sit", "verb", "female", "plural", "third", "na", "simple-present"],
+                    ["sit", "sit", "verb", "male", "plural", "third", "na", "simple-future"],
+                    ["sit", "sit", "verb", "female", "plural", "third", "na", "simple-future"]
+                ],
+                "sits": [
+                    ["sits", "sit", "verb", "male", "singular", "third", "na", "simple-present"],
+                    ["sits", "sit", "verb", "female", "singular", "third", "na", "simple-present"],
+                    ["sits", "sit", "noun", "na", "plural", "na", "na", "na"]
+                ],
+                "sitting": [
+                    ["sitting", "sit", "verb", "male", "singular", "first", "na", "present-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "first", "na", "present-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "first", "na", "present-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "first", "na", "present-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "second", "na", "present-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "second", "na", "present-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "second", "na", "present-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "second", "na", "present-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "third", "na", "present-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "third", "na", "present-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "third", "na", "present-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "third", "na", "present-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "first", "na", "past-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "first", "na", "past-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "first", "na", "past-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "first", "na", "past-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "second", "na", "past-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "second", "na", "past-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "second", "na", "past-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "second", "na", "past-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "third", "na", "past-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "third", "na", "past-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "third", "na", "past-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "third", "na", "past-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "first", "na", "future-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "first", "na", "future-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "first", "na", "future-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "first", "na", "future-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "second", "na", "future-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "second", "na", "future-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "second", "na", "future-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "second", "na", "future-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "third", "na", "future-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "third", "na", "future-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "third", "na", "future-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "third", "na", "future-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "first", "na", "present-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "first", "na", "present-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "first", "na", "present-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "first", "na", "present-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "second", "na", "present-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "second", "na", "present-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "second", "na", "present-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "second", "na", "present-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "third", "na", "present-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "third", "na", "present-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "third", "na", "present-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "third", "na", "present-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "first", "na", "past-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "first", "na", "past-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "first", "na", "past-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "first", "na", "past-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "second", "na", "past-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "second", "na", "past-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "second", "na", "past-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "second", "na", "past-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "third", "na", "past-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "third", "na", "past-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "third", "na", "past-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "third", "na", "past-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "first", "na", "future-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "first", "na", "future-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "first", "na", "future-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "first", "na", "future-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "second", "na", "future-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "second", "na", "future-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "second", "na", "future-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "second", "na", "future-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "singular", "third", "na", "future-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "singular", "third", "na", "future-perfect-continuous"],
+                    ["sitting", "sit", "verb", "male", "plural", "third", "na", "future-perfect-continuous"],
+                    ["sitting", "sit", "verb", "female", "plural", "third", "na", "future-perfect-continuous"]
+                ],
+                "sat": [
+                    ["sat", "sit", "verb", "male", "singular", "first", "na", "simple-past"],
+                    ["sat", "sit", "verb", "female", "singular", "first", "na", "simple-past"],
+                    ["sat", "sit", "verb", "male", "plural", "first", "na", "simple-past"],
+                    ["sat", "sit", "verb", "female", "plural", "first", "na", "simple-past"],
+                    ["sat", "sit", "verb", "male", "singular", "second", "na", "simple-past"],
+                    ["sat", "sit", "verb", "female", "singular", "second", "na", "simple-past"],
+                    ["sat", "sit", "verb", "male", "plural", "second", "na", "simple-past"],
+                    ["sat", "sit", "verb", "female", "plural", "second", "na", "simple-past"],
+                    ["sat", "sit", "verb", "male", "singular", "third", "na", "simple-past"],
+                    ["sat", "sit", "verb", "female", "singular", "third", "na", "simple-past"],
+                    ["sat", "sit", "verb", "male", "plural", "third", "na", "simple-past"],
+                    ["sat", "sit", "verb", "female", "plural", "third", "na", "simple-past"],
+                    ["sat", "sit", "verb", "male", "singular", "first", "na", "present-perfect"],
+                    ["sat", "sit", "verb", "female", "singular", "first", "na", "present-perfect"],
+                    ["sat", "sit", "verb", "male", "plural", "first", "na", "present-perfect"],
+                    ["sat", "sit", "verb", "female", "plural", "first", "na", "present-perfect"],
+                    ["sat", "sit", "verb", "male", "singular", "second", "na", "present-perfect"],
+                    ["sat", "sit", "verb", "female", "singular", "second", "na", "present-perfect"],
+                    ["sat", "sit", "verb", "male", "plural", "second", "na", "present-perfect"],
+                    ["sat", "sit", "verb", "female", "plural", "second", "na", "present-perfect"],
+                    ["sat", "sit", "verb", "male", "singular", "third", "na", "present-perfect"],
+                    ["sat", "sit", "verb", "female", "singular", "third", "na", "present-perfect"],
+                    ["sat", "sit", "verb", "male", "plural", "third", "na", "present-perfect"],
+                    ["sat", "sit", "verb", "female", "plural", "third", "na", "present-perfect"],
+                    ["sat", "sit", "verb", "male", "singular", "first", "na", "past-perfect"],
+                    ["sat", "sit", "verb", "female", "singular", "first", "na", "past-perfect"],
+                    ["sat", "sit", "verb", "male", "plural", "first", "na", "past-perfect"],
+                    ["sat", "sit", "verb", "female", "plural", "first", "na", "past-perfect"],
+                    ["sat", "sit", "verb", "male", "singular", "second", "na", "past-perfect"],
+                    ["sat", "sit", "verb", "female", "singular", "second", "na", "past-perfect"],
+                    ["sat", "sit", "verb", "male", "plural", "second", "na", "past-perfect"],
+                    ["sat", "sit", "verb", "female", "plural", "second", "na", "past-perfect"],
+                    ["sat", "sit", "verb", "male", "singular", "third", "na", "past-perfect"],
+                    ["sat", "sit", "verb", "female", "singular", "third", "na", "past-perfect"],
+                    ["sat", "sit", "verb", "male", "plural", "third", "na", "past-perfect"],
+                    ["sat", "sit", "verb", "female", "plural", "third", "na", "past-perfect"],
+                    ["sat", "sit", "verb", "male", "singular", "first", "na", "future-perfect"],
+                    ["sat", "sit", "verb", "female", "singular", "first", "na", "future-perfect"],
+                    ["sat", "sit", "verb", "male", "plural", "first", "na", "future-perfect"],
+                    ["sat", "sit", "verb", "female", "plural", "first", "na", "future-perfect"],
+                    ["sat", "sit", "verb", "male", "singular", "second", "na", "future-perfect"],
+                    ["sat", "sit", "verb", "female", "singular", "second", "na", "future-perfect"],
+                    ["sat", "sit", "verb", "male", "plural", "second", "na", "future-perfect"],
+                    ["sat", "sit", "verb", "female", "plural", "second", "na", "future-perfect"],
+                    ["sat", "sit", "verb", "male", "singular", "third", "na", "future-perfect"],
+                    ["sat", "sit", "verb", "female", "singular", "third", "na", "future-perfect"],
+                    ["sat", "sit", "verb", "male", "plural", "third", "na", "future-perfect"],
+                    ["sat", "sit", "verb", "female", "plural", "third", "na", "future-perfect"]
+                ],
+                "book": [
+                    ["book", "book", "verb", "male", "singular", "first", "na", "simple-present"],
+                    ["book", "book", "verb", "female", "singular", "first", "na", "simple-present"],
+                    ["book", "book", "verb", "male", "plural", "first", "na", "simple-present"],
+                    ["book", "book", "verb", "female", "plural", "first", "na", "simple-present"],
+                    ["book", "book", "verb", "male", "singular", "second", "na", "simple-present"],
+                    ["book", "book", "verb", "female", "singular", "second", "na", "simple-present"],
+                    ["book", "book", "verb", "male", "plural", "second", "na", "simple-present"],
+                    ["book", "book", "verb", "female", "plural", "second", "na", "simple-present"],
+                    ["book", "book", "verb", "male", "singular", "first", "na", "simple-future"],
+                    ["book", "book", "verb", "female", "singular", "first", "na", "simple-future"],
+                    ["book", "book", "verb", "male", "plural", "first", "na", "simple-future"],
+                    ["book", "book", "verb", "female", "plural", "first", "na", "simple-future"],
+                    ["book", "book", "verb", "male", "singular", "second", "na", "simple-future"],
+                    ["book", "book", "verb", "female", "singular", "second", "na", "simple-future"],
+                    ["book", "book", "verb", "male", "plural", "second", "na", "simple-future"],
+                    ["book", "book", "verb", "female", "plural", "second", "na", "simple-future"],
+                    ["book", "book", "verb", "male", "plural", "third", "na", "simple-present"],
+                    ["book", "book", "verb", "female", "plural", "third", "na", "simple-present"],
+                    ["book", "book", "verb", "male", "plural", "third", "na", "simple-future"],
+                    ["book", "book", "verb", "female", "plural", "third", "na", "simple-future"],
+                    ["book", "book", "noun", "na", "singular", "na", "na", "na"]
+                ],
+                "books": [
+                    ["books", "book", "verb", "male", "singular", "third", "na", "simple-present"],
+                    ["books", "book", "verb", "female", "singular", "third", "na", "simple-present"],
+                    ["books", "book", "noun", "na", "plural", "na", "na", "na"]
+                ],
+                "booking": [
+                    ["booking", "book", "verb", "male", "singular", "first", "na", "present-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "first", "na", "present-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "first", "na", "present-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "first", "na", "present-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "second", "na", "present-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "second", "na", "present-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "second", "na", "present-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "second", "na", "present-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "third", "na", "present-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "third", "na", "present-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "third", "na", "present-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "third", "na", "present-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "first", "na", "past-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "first", "na", "past-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "first", "na", "past-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "first", "na", "past-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "second", "na", "past-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "second", "na", "past-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "second", "na", "past-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "second", "na", "past-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "third", "na", "past-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "third", "na", "past-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "third", "na", "past-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "third", "na", "past-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "first", "na", "future-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "first", "na", "future-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "first", "na", "future-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "first", "na", "future-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "second", "na", "future-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "second", "na", "future-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "second", "na", "future-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "second", "na", "future-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "third", "na", "future-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "third", "na", "future-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "third", "na", "future-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "third", "na", "future-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "first", "na", "present-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "first", "na", "present-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "first", "na", "present-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "first", "na", "present-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "second", "na", "present-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "second", "na", "present-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "second", "na", "present-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "second", "na", "present-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "third", "na", "present-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "third", "na", "present-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "third", "na", "present-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "third", "na", "present-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "first", "na", "past-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "first", "na", "past-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "first", "na", "past-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "first", "na", "past-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "second", "na", "past-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "second", "na", "past-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "second", "na", "past-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "second", "na", "past-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "third", "na", "past-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "third", "na", "past-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "third", "na", "past-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "third", "na", "past-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "first", "na", "future-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "first", "na", "future-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "first", "na", "future-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "first", "na", "future-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "second", "na", "future-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "second", "na", "future-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "second", "na", "future-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "second", "na", "future-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "singular", "third", "na", "future-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "singular", "third", "na", "future-perfect-continuous"],
+                    ["booking", "book", "verb", "male", "plural", "third", "na", "future-perfect-continuous"],
+                    ["booking", "book", "verb", "female", "plural", "third", "na", "future-perfect-continuous"],
+                    ["booking", "booking", "noun", "na", "singular", "na", "na", "na"]
+                ],
+                "bookings": [
+                    ["bookings", "booking", "noun", "na", "plural", "na", "na", "na"]
+                ],
+                "booked": [
+                    ["booked", "book", "verb", "male", "singular", "first", "na", "simple-past"],
+                    ["booked", "book", "verb", "female", "singular", "first", "na", "simple-past"],
+                    ["booked", "book", "verb", "male", "plural", "first", "na", "simple-past"],
+                    ["booked", "book", "verb", "female", "plural", "first", "na", "simple-past"],
+                    ["booked", "book", "verb", "male", "singular", "second", "na", "simple-past"],
+                    ["booked", "book", "verb", "female", "singular", "second", "na", "simple-past"],
+                    ["booked", "book", "verb", "male", "plural", "second", "na", "simple-past"],
+                    ["booked", "book", "verb", "female", "plural", "second", "na", "simple-past"],
+                    ["booked", "book", "verb", "male", "singular", "third", "na", "simple-past"],
+                    ["booked", "book", "verb", "female", "singular", "third", "na", "simple-past"],
+                    ["booked", "book", "verb", "male", "plural", "third", "na", "simple-past"],
+                    ["booked", "book", "verb", "female", "plural", "third", "na", "simple-past"],
+                    ["booked", "book", "verb", "male", "singular", "first", "na", "present-perfect"],
+                    ["booked", "book", "verb", "female", "singular", "first", "na", "present-perfect"],
+                    ["booked", "book", "verb", "male", "plural", "first", "na", "present-perfect"],
+                    ["booked", "book", "verb", "female", "plural", "first", "na", "present-perfect"],
+                    ["booked", "book", "verb", "male", "singular", "second", "na", "present-perfect"],
+                    ["booked", "book", "verb", "female", "singular", "second", "na", "present-perfect"],
+                    ["booked", "book", "verb", "male", "plural", "second", "na", "present-perfect"],
+                    ["booked", "book", "verb", "female", "plural", "second", "na", "present-perfect"],
+                    ["booked", "book", "verb", "male", "singular", "third", "na", "present-perfect"],
+                    ["booked", "book", "verb", "female", "singular", "third", "na", "present-perfect"],
+                    ["booked", "book", "verb", "male", "plural", "third", "na", "present-perfect"],
+                    ["booked", "book", "verb", "female", "plural", "third", "na", "present-perfect"],
+                    ["booked", "book", "verb", "male", "singular", "first", "na", "past-perfect"],
+                    ["booked", "book", "verb", "female", "singular", "first", "na", "past-perfect"],
+                    ["booked", "book", "verb", "male", "plural", "first", "na", "past-perfect"],
+                    ["booked", "book", "verb", "female", "plural", "first", "na", "past-perfect"],
+                    ["booked", "book", "verb", "male", "singular", "second", "na", "past-perfect"],
+                    ["booked", "book", "verb", "female", "singular", "second", "na", "past-perfect"],
+                    ["booked", "book", "verb", "male", "plural", "second", "na", "past-perfect"],
+                    ["booked", "book", "verb", "female", "plural", "second", "na", "past-perfect"],
+                    ["booked", "book", "verb", "male", "singular", "third", "na", "past-perfect"],
+                    ["booked", "book", "verb", "female", "singular", "third", "na", "past-perfect"],
+                    ["booked", "book", "verb", "male", "plural", "third", "na", "past-perfect"],
+                    ["booked", "book", "verb", "female", "plural", "third", "na", "past-perfect"],
+                    ["booked", "book", "verb", "male", "singular", "first", "na", "future-perfect"],
+                    ["booked", "book", "verb", "female", "singular", "first", "na", "future-perfect"],
+                    ["booked", "book", "verb", "male", "plural", "first", "na", "future-perfect"],
+                    ["booked", "book", "verb", "female", "plural", "first", "na", "future-perfect"],
+                    ["booked", "book", "verb", "male", "singular", "second", "na", "future-perfect"],
+                    ["booked", "book", "verb", "female", "singular", "second", "na", "future-perfect"],
+                    ["booked", "book", "verb", "male", "plural", "second", "na", "future-perfect"],
+                    ["booked", "book", "verb", "female", "plural", "second", "na", "future-perfect"],
+                    ["booked", "book", "verb", "male", "singular", "third", "na", "future-perfect"],
+                    ["booked", "book", "verb", "female", "singular", "third", "na", "future-perfect"],
+                    ["booked", "book", "verb", "male", "plural", "third", "na", "future-perfect"],
+                    ["booked", "book", "verb", "female", "plural", "third", "na", "future-perfect"]
+                ]
+            };
+
+            var selectedWordAnswers = correctAnswers[selectedWord];
+
+            if (!selectedWordAnswers) {
+                document.getElementById("result").innerHTML = "Please select a word.";
+                document.getElementById("result").style.display = "block";
+                return;
+            }
+
+            for (var i = 0; i < selectedWordAnswers.length; i++) {
+                if (selectedRoot == selectedWordAnswers[i][1] &&
+                    selectedCategory == selectedWordAnswers[i][2] &&
+                    selectedGender == selectedWordAnswers[i][3] &&
+                    selectedNumber == selectedWordAnswers[i][4] &&
+                    selectedPerson == selectedWordAnswers[i][5] &&
+                    selectedCase == selectedWordAnswers[i][6] &&
+                    selectedTense == selectedWordAnswers[i][7]) {
+                    document.getElementById("result").innerText = "Correct!";
+                    document.getElementById("result").style.display = "block";
+                    return;
+                }
+            }
+
+            document.getElementById("result").innerHTML = "Incorrect. Here are the correct answers:<br><br>";
+            document.getElementById("result").style.display = "block";
+
+            var correctAnswersTable = "<table><tr><th>WORD</th><th>ROOT</th><th>CATEGORY</th><th>GENDER</th><th>NUMBER</th><th>PERSON</th><th>CASE</th><th>TENSE</th></tr>";
+            for (var i = 0; i < selectedWordAnswers.length; i++) {
+                correctAnswersTable += "<tr>";
+                for (var j = 0; j < selectedWordAnswers[i].length; j++) {
+                    correctAnswersTable += "<td>" + selectedWordAnswers[i][j] + "</td>";
+                }
+                correctAnswersTable += "</tr>";
+            }
+            correctAnswersTable += "</table>";
+
+            document.getElementById("result").innerHTML += correctAnswersTable;
+        }
+    </script>
+</body>
+
+</html>
